@@ -6,7 +6,7 @@ import { Color } from "../../../helper/Colors";
 export default function Nav() {
   return (
     <Wrapper>
-      <Link>
+      <Link to="/homepage">
         <span>Home</span>
       </Link>
       <Link>
@@ -15,7 +15,7 @@ export default function Nav() {
       <Link>
         <span>Cart</span>
       </Link>
-      <Link>
+      <Link to="/purchased-history">
         <span>Profile</span>
       </Link>
     </Wrapper>

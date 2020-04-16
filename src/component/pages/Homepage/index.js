@@ -14,7 +14,7 @@ import { setMock } from "../../../store/actions";
 const API = "https://private-4639ce-ecommerce56.apiary-mock.com/home";
 
 function Homepage(props) {
-  const { history, value, dispatch } = props;
+  const { history, dispatch } = props;
   const [data, setData] = useState();
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
@@ -67,7 +67,7 @@ function Homepage(props) {
         <h3>Promo</h3>
         <List>{renderPromo(data)}</List>
       </Container>
-      <Nav />
+      <Nav history={history} />
     </Wrapper>
   );
 }

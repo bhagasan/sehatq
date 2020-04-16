@@ -1,6 +1,6 @@
 import { createStore } from "redux";
-import { dataMock } from "./reducer";
+import addReducer from "./reducer";
 
-const store = createStore(dataMock);
+const store = createStore(addReducer);
 
 export default store;

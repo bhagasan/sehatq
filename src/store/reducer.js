@@ -1,11 +1,15 @@
-import { SET_MOCK } from "./actions";
+import { SET_MOCK, BUY_PRODUCT } from "./actions";
 
-export const dataMock = (state = {}, action) => {
-  const { type, data } = action;
+const addReducer = (state = {}, action) => {
+  const { type, data, purchased } = action;
   switch (type) {
     case SET_MOCK:
       return { ...state, data };
+    case BUY_PRODUCT:
+      return { ...state, purchased };
     default:
       return state;
   }
 };
+
+export default addReducer;

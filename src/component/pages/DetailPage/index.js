@@ -9,9 +9,10 @@ import Button from "../../commons/Button";
 
 import IconBack from "../../../assets/icons/back.png";
 import IconShare from "../../../assets/icons/share.png";
+import { buyProduct } from "../../../store/actions";
 
 function DetailPage(props) {
-  const { history, value } = props;
+  const { history, value, dispatch } = props;
   const { id: barangId } = useParams();
   const [data, setData] = useState();
 
@@ -20,13 +21,14 @@ function DetailPage(props) {
 
     if (Object.keys(value).length > 0) {
       const { promo } = value.data;
-      promo.forEach(({ id, title, imageUrl, description }) => {
+      promo.forEach(({ id, title, imageUrl, description, price }) => {
         if (barangId === id) {
           temp = {
             id,
             title,
             imageUrl,
             description,
+            price,
           };
         }
       });
@@ -35,6 +37,16 @@ function DetailPage(props) {
       history.push("/homepage");
     }
   }, [barangId, history, value]);
+
+  function handleBuy() {
+    if (value.purchased) {
+      const temp = value.purchased;
+      temp.push(data);
+      dispatch(buyProduct(temp));
+    } else {
+      dispatch(buyProduct([data]));
+    }
+  }
 
   return (
     <Wrapper>
@@ -57,8 +69,8 @@ function DetailPage(props) {
       )}
       <Footer>
         <div>
-          <span>Rp 40.000</span>
-          <Button>BUY</Button>
+          <span>{data && data.price}</span>
+          <Button onClick={handleBuy}>BUY</Button>
         </div>
       </Footer>
     </Wrapper>
@@ -112,7 +124,7 @@ const Footer = Styled.div`
     width: max-content;
     span{
       display: inline-block;
-      margin-right: 24px;
+      margin-right: 18px;
     }
   }
   
