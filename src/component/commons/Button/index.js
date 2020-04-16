@@ -16,6 +16,7 @@ const Btn = Styled.button`
   font-size: 16px;
   width: max-content;
   padding: 8px 28px;
+  border-radius: 8px;
 
   ${({ type }) =>
     type === "secondary"
