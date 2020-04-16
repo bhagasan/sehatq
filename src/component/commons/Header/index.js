@@ -1,81 +1,22 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Styled, { css } from "styled-components";
-import { connect } from "react-redux";
 import { Color } from "../../../helper/Colors";
 import { Link } from "react-router-dom";
 import Input from "../Input";
 import Card from "../Card";
-import { setMock } from "../../../store/actions";
 
 import IconSearch from "../../../assets/icons/search.png";
 import IconHeart from "../../../assets/icons/heart-color.png";
-import IconPlaceholder from "../../../assets/icons/photo.png";
-
-const DATA = [
-  {
-    id: "1",
-    title: "bantal",
-    imageUrl: IconPlaceholder,
-    price: "Rp80.000",
-  },
-  {
-    id: "2",
-    title: "bantal murah",
-    imageUrl: IconPlaceholder,
-    price: "Rp60.000",
-  },
-
-  {
-    id: "3",
-    title: "guling biasa",
-    imageUrl: IconPlaceholder,
-    price: "Rp50.000",
-  },
-  {
-    id: "4",
-    title: "guling premium",
-    imageUrl: IconPlaceholder,
-    price: "Rp150.000",
-  },
-  {
-    id: "5",
-    title: "guling murah",
-    imageUrl: IconPlaceholder,
-    price: "Rp30.000",
-  },
-  {
-    id: "6",
-    title: "selimut",
-    imageUrl: IconPlaceholder,
-    price: "Rp200.000",
-  },
-  {
-    id: "7",
-    title: "seprai",
-    imageUrl: IconPlaceholder,
-    price: "Rp120.000",
-  },
-  {
-    id: "8",
-    title: "kasur",
-    imageUrl: IconPlaceholder,
-    price: "Rp2.000.000",
-  },
-];
 
 function Header(props) {
-  const { dispatch } = props;
+  const { data } = props;
   const [isOpen, setIsOpen] = useState(false);
   const [searchValue, setSearchValue] = useState();
-
-  useEffect(() => {
-    dispatch(setMock(DATA));
-  });
 
   function renderList(filter) {
     let temp = [];
     if (filter) {
-      DATA.forEach(({ title, price, id, imageUrl }) => {
+      data.promo.forEach(({ title, price, id, imageUrl }) => {
         const tempName = title.toLowerCase();
         let isExist = tempName.indexOf(filter.toLowerCase());
         if (isExist >= 0) {
@@ -96,7 +37,7 @@ function Header(props) {
         <Input
           type="text"
           prefix={IconSearch}
-          placeholder="Cari guling"
+          placeholder="Cari Nitendo"
           onFocus={() => setIsOpen(true)}
           onChange={(e) => setSearchValue(e.target.value)}
         />
@@ -113,7 +54,7 @@ function Header(props) {
   );
 }
 
-export default connect()(Header);
+export default Header;
 
 const Button = Styled.button`
   background-color: transparent;

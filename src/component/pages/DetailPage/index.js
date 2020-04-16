@@ -1,54 +1,43 @@
 import React, { useEffect, useState } from "react";
 import Styled from "styled-components";
 import { useParams } from "react-router-dom";
-import Axios from "axios";
 import { connect } from "react-redux";
 import { Color } from "../../../helper/Colors";
 
 import Card from "../../commons/Card";
 import Button from "../../commons/Button";
-import Loading from "../../commons/Loading";
 
 import IconBack from "../../../assets/icons/back.png";
 import IconShare from "../../../assets/icons/share.png";
-
-const API = "https://private-4639ce-ecommerce56.apiary-mock.com/home";
 
 function DetailPage(props) {
   const { history, value } = props;
   const { id: barangId } = useParams();
   const [data, setData] = useState();
-  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    Axios.get(API)
-      .then((res) => {
-        const { productPromo: promo } = res.data[0].data;
-        let temp = {};
-        promo.forEach(({ id, title, imageUrl, description }) => {
-          if (barangId === id) {
-            temp = {
-              id,
-              title,
-              imageUrl,
-              description,
-            };
-          }
-        });
-        setIsLoading(false);
-        setData(temp);
-      })
-      .catch((err) => {
-        setIsLoading(false);
-        throw err;
-      });
-  }, [barangId]);
+    let temp = [];
 
-  console.log("vaaal", value);
+    if (Object.keys(value).length > 0) {
+      const { promo } = value.data;
+      promo.forEach(({ id, title, imageUrl, description }) => {
+        if (barangId === id) {
+          temp = {
+            id,
+            title,
+            imageUrl,
+            description,
+          };
+        }
+      });
+      setData(temp);
+    } else {
+      history.push("/homepage");
+    }
+  }, [barangId, history, value]);
 
   return (
     <Wrapper>
-      <Loading isLoading={isLoading} type="full" />
       <Nav>
         <BtnIcon onClick={() => history.goBack()}>
           <img src={IconBack} alt="back" />

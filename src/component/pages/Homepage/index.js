@@ -9,11 +9,12 @@ import { Container } from "../../commons/Layout";
 import Card from "../../commons/Card";
 import Carousel from "../../commons/Carousel";
 import Loading from "../../commons/Loading";
+import { setMock } from "../../../store/actions";
 
 const API = "https://private-4639ce-ecommerce56.apiary-mock.com/home";
 
 function Homepage(props) {
-  const { history, value } = props;
+  const { history, value, dispatch } = props;
   const [data, setData] = useState();
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
@@ -21,6 +22,12 @@ function Homepage(props) {
       .then((res) => {
         const { category, productPromo: promo } = res.data[0].data;
         setIsLoading(false);
+        dispatch(
+          setMock({
+            promo,
+            category,
+          })
+        );
         setData({
           promo,
           category,
@@ -29,7 +36,7 @@ function Homepage(props) {
       .catch((err) => {
         throw err;
       });
-  }, []);
+  }, [dispatch]);
 
   function renderPromo(params) {
     let temp = {};
@@ -54,7 +61,7 @@ function Homepage(props) {
   return (
     <Wrapper>
       <Loading isLoading={isLoading} type="full" />
-      <Header />
+      <Header data={data} />
       {data && <Carousel data={data.category} />}
       <Container>
         <h3>Promo</h3>
